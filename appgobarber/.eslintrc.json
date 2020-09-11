@@ -37,6 +37,8 @@
       "import/prefer-default-export": "off",
       "prettier/prettier": "error",
       "no-use-before-define": "off",
+      "no-unused-expressions": "off",
+      "@typescript-eslint/ban-types": "off",
       "import/extensions": [
         "error",
         "ignorePackages",

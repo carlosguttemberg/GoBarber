@@ -1,16 +1,16 @@
-// import User from '@modules/users/infra/typeorm/entities/User';
-
-import { inject, injectable } from 'tsyringe';
+import { injectable, inject } from 'tsyringe';
 import { isAfter, addHours } from 'date-fns';
 
 import AppError from '@shared/errors/AppError';
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
-import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
+import IUsersRepository from '../repositories/IUsersRepository';
+import IUserTokensRepository from '../repositories/IUserTokensRepository';
+import IHashProvider from '../providers/HashProvider/models/IHashProvider';
+
+// import User from '../infra/typeorm/entities/User'
 
 interface IRequest {
-    password: string;
     token: string;
+    password: string;
 }
 
 @injectable()
@@ -43,7 +43,7 @@ class ResetPasswordService {
         const compareDate = addHours(tokenCreatedAt, 2);
 
         if (isAfter(Date.now(), compareDate)) {
-            throw new AppError('Token Expired');
+            throw new AppError('Token expired');
         }
 
         user.password = await this.hashProvider.generateHash(password);

@@ -6,13 +6,13 @@ import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarSer
 
 let fakeUsersRepository: FakeUsersRepository;
 let fakeStorageProvider: FakeStorageProvider;
-let UpdateUserAvatar: UpdateUserAvatarService;
+let updateUserAvatar: UpdateUserAvatarService;
 
 describe('UpdateUserAvatar', () => {
     beforeEach(() => {
         fakeUsersRepository = new FakeUsersRepository();
         fakeStorageProvider = new FakeStorageProvider();
-        UpdateUserAvatar = new UpdateUserAvatarService(
+        updateUserAvatar = new UpdateUserAvatarService(
             fakeUsersRepository,
             fakeStorageProvider,
         );
@@ -25,7 +25,7 @@ describe('UpdateUserAvatar', () => {
             password: '123456',
         });
 
-        await UpdateUserAvatar.execute({
+        await updateUserAvatar.execute({
             user_id: user.id,
             avatarFilename: 'avatar.jpg',
         });
@@ -35,7 +35,7 @@ describe('UpdateUserAvatar', () => {
 
     it('should not be able to update avatar from non existing user', async () => {
         await expect(
-            UpdateUserAvatar.execute({
+            updateUserAvatar.execute({
                 user_id: 'non-existing-user',
                 avatarFilename: 'avatar.jpg',
             }),
@@ -51,12 +51,12 @@ describe('UpdateUserAvatar', () => {
             password: '123456',
         });
 
-        await UpdateUserAvatar.execute({
+        await updateUserAvatar.execute({
             user_id: user.id,
             avatarFilename: 'avatar.jpg',
         });
 
-        await UpdateUserAvatar.execute({
+        await updateUserAvatar.execute({
             user_id: user.id,
             avatarFilename: 'avatar2.jpg',
         });
